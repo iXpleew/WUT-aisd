@@ -53,8 +53,29 @@ def merge(left_list: list[str], right_list: list[str]):
     i = j = 0
 
     while i < len(left_list) and j < len(right_list):
-        if le
+        if is_first_word_better(left_list[i], right_list[1]):
+            result.append(left_list[i])
+            i += 1
+        else:
+            result.append(right_list[j])
+            j += 1
+    result.extend(left_list[i:])
+    result.extend(right_list[j:])
+    return result
+        
 
+
+def is_first_word_better(first_word, second_word):
+    first_incr = second_incr = 0
+    while first_incr < len(first_word) and second_incr < len(second_word):
+        if letter_values[first_word[first_incr]] > letter_values[second_word[second_incr]]:
+            return False
+        elif letter_values[first_word[first_incr]] < letter_values[second_word[second_incr]]:
+            return True
+    if len(first_word) > len(second_word):
+        return False
+    else:
+        return True
 
 if __name__=="__main__":
     MAX_MEMORY = 10000
