@@ -66,25 +66,26 @@ def merge(left_list: list[str], right_list: list[str]):
         
 
 
-def is_first_word_better(first_word, second_word):
-    first_incr = second_incr = 0
-    while first_incr < len(first_word) and second_incr < len(second_word):
-        if letter_values[first_word[first_incr]] > letter_values[second_word[second_incr]]:
+def is_first_word_better(first_word: str, second_word: str) -> bool:
+    index = 0
+    while index < len(first_word) and index < len(second_word):
+        if letter_values[first_word[index]] > letter_values[second_word[index]]:
             return False
-        elif letter_values[first_word[first_incr]] < letter_values[second_word[second_incr]]:
+        elif letter_values[first_word[index]] < letter_values[second_word[index]]:
             return True
+        else:
+            index += 1
     if len(first_word) > len(second_word):
         return False
     else:
         return True
 
 if __name__=="__main__":
-    MAX_MEMORY = 10
-    counter = 1
+    MAX_MEMORY = 100
     word_list = []
     with open("input.txt", "r") as file:
         for i in range(MAX_MEMORY):
-            word_list.append(file.readline())
+            word_list.append(file.readline()[:-1])
     
     sorted_words = merge_sort(word_list)
     for word in sorted_words:
