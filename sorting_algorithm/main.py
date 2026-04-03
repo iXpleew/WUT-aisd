@@ -82,7 +82,8 @@ def is_first_word_better(first_word: str, second_word: str) -> bool:
     else:
         return True
 
-if __name__=="__main__":
+
+def main():
     MAX_MEMORY = 160000
     word_list = []
     with open("input.txt", "r") as file:
@@ -90,5 +91,8 @@ if __name__=="__main__":
             word_list.append(file.readline()[:-1])
     
     sorted_words = merge_sort(word_list)
-    for word in sorted_words:
-        print(word)
+
+
+if __name__=="__main__":
+    main()
+
