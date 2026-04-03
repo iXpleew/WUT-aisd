@@ -26,11 +26,13 @@ letter_values = {
     'ś': 25,
     't': 26,
     'u': 27,
-    'w': 28,
-    'y': 29,
-    'z': 30,
-    'ź': 31,
-    'ż': 32
+    'v': 28,
+    'w': 29,
+    'x': 30,
+    'y': 31,
+    'z': 32,
+    'ź': 33,
+    'ż': 34
 }
 
 
@@ -81,7 +83,7 @@ def is_first_word_better(first_word: str, second_word: str) -> bool:
         return True
 
 if __name__=="__main__":
-    MAX_MEMORY = 100
+    MAX_MEMORY = 160000
     word_list = []
     with open("input.txt", "r") as file:
         for i in range(MAX_MEMORY):
