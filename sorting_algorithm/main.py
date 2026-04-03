@@ -33,6 +33,7 @@ letter_values = {
     'ż': 32
 }
 
+
 def merge_sort(words: list[str]) -> list[str]:
     list_size = len(words)
     if list_size <= 1:
@@ -53,7 +54,7 @@ def merge(left_list: list[str], right_list: list[str]):
     i = j = 0
 
     while i < len(left_list) and j < len(right_list):
-        if is_first_word_better(left_list[i], right_list[1]):
+        if is_first_word_better(left_list[i], right_list[j]):
             result.append(left_list[i])
             i += 1
         else:
@@ -78,10 +79,13 @@ def is_first_word_better(first_word, second_word):
         return True
 
 if __name__=="__main__":
-    MAX_MEMORY = 10000
+    MAX_MEMORY = 10
     counter = 1
     word_list = []
     with open("input.txt", "r") as file:
         for i in range(MAX_MEMORY):
-            word_list.append(file.read())
-    print(len(word_list))
+            word_list.append(file.readline())
+    
+    sorted_words = merge_sort(word_list)
+    for word in sorted_words:
+        print(word)
