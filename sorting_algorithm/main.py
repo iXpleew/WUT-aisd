@@ -84,13 +84,16 @@ def is_first_word_better(first_word: str, second_word: str) -> bool:
 
 
 def main():
-    MAX_MEMORY = 160000
+    counter = 0
+    MAX_MEMORY = 10
     word_list = []
     with open("input.txt", "r") as file:
-        for i in range(MAX_MEMORY):
-            word_list.append(file.readline()[:-1])
-    
-    sorted_words = merge_sort(word_list)
+        for line in file:
+            word_list.append(line[:-1])
+            if len(word_list) == MAX_MEMORY:
+                sorted_words = merge_sort(word_list)
+                print(sorted_words)
+                word_list.clear()
 
 
 if __name__=="__main__":
