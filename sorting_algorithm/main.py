@@ -1,5 +1,8 @@
 MAX_MEMORY = 1000
 counter = 1
+word_list = []
+
 with open("input.txt", "r") as file:
     for i in range(MAX_MEMORY):
-        print(file.readline(),end="")
+        word_list.append(file.read())
+print(len(word_list))
