@@ -1,3 +1,5 @@
+import os
+
 letter_values = {
     'a': 1,
     'ą': 2,
@@ -82,6 +84,11 @@ def is_first_word_better(first_word: str, second_word: str) -> bool:
         return True
 
 
+def count_lines(file_path: str) -> int:
+    with open(file_path, 'r') as file:
+        return sum(1 for _ in file)
+
+
 def create_file_name(counter: int):
     return f"results/temp{counter}.txt"
 
@@ -123,14 +130,34 @@ def compare_lists(first_list: list[str], second_list: list[str]):
         
 
 def compare_files(files: list[str]):
+    new_files = []
     midway = len(files) // 2
     for i in range(midway):
-        with open(files[i], "r") as first_file, open(files[i+midway], "r") as second_file:
-            first_list = [line[:-1] for line in first_file.readlines()]
-            second_list = [line[:-1] for line in second_file.readlines()]
-            output_list = compare_lists(first_list, second_list)
-            file_name = create_file_name(i+1)
-            save_sorted_values(file_name, output_list)
+        output_file_name = f"results/{len(files)}a{i}.txt"
+        with open(files[i], "r") as first_file, open(files[i+midway], "r") as second_file, open(output_file_name, "w") as output_file:
+            
+            first_index = second_index = 0
+            first_line = first_file.readline()[:-1]
+            second_line = second_file.readline()[:-1]
+
+            first_file_lenght = count_lines(files[i])
+            second_file_lenght = count_lines(files[i+midway])
+
+            while first_index < first_file_lenght and second_index < second_file_lenght:
+                if is_first_word_better(first_line, second_line):
+                    output_file.write(f"{first_line}\n")
+                    first_line = first_file.readline()[:-1]
+                    first_index += 1
+                else:
+                    output_file.write(f"{second_line}\n")
+                    second_line = second_file.readline()[:-1]
+                    second_index += 1
+        
+            os.remove(create_file_name(i+1))
+            os.remove(create_file_name(i+1+midway))
+
+        new_files.append(output_file_name)
+
 
 def main():
     MAX_MEMORY = 10000
