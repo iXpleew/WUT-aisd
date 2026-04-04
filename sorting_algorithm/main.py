@@ -89,7 +89,7 @@ def create_file_name(counter: int):
 def save_sorted_values(file_name: str, sorted_list: list[str]):
     with open(file_name, mode="w") as temp_file:
         for line in sorted_list:
-            temp_file.write(f"{line}")
+            temp_file.write(f"{line}\n")
 
 
 def create_new_file(files_list: list[str], words_list: list[str], counter: int):
@@ -126,10 +126,10 @@ def compare_files(files: list[str]):
     midway = len(files) // 2
     for i in range(midway):
         with open(files[i], "r") as first_file, open(files[i+midway], "r") as second_file:
-            first_list = first_file.readlines()
-            second_list = second_file.readlines()
+            first_list = [line[:-1] for line in first_file.readlines()]
+            second_list = [line[:-1] for line in second_file.readlines()]
             output_list = compare_lists(first_list, second_list)
-            file_name = create_file_name(i+1,)
+            file_name = create_file_name(i+1)
             save_sorted_values(file_name, output_list)
 
 def main():
