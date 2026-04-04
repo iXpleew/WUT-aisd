@@ -83,24 +83,54 @@ def is_first_word_better(first_word: str, second_word: str) -> bool:
 
 
 def create_file_name(counter: int):
-    return f"result/temp{counter}.txt"
+    return f"results/temp{counter}.txt"
 
 
 def save_sorted_values(file_name: str, sorted_list: list[str]):
     with open(file_name, mode="w") as temp_file:
         for line in sorted_list:
-            temp_file.write(f"{line}\n")
+            temp_file.write(f"{line}")
 
 
-def create_new_file(word_list: list[str], counter: int):
-    sorted_words = merge_sort(word_list)
+def create_new_file(files_list: list[str], words_list: list[str], counter: int):
+    sorted_words = merge_sort(words_list)
     file_name = create_file_name(counter)
+    files_list.append(file_name)
     save_sorted_values(file_name, sorted_words)
 
 
-def compare_files(files_number: int):
-    for i in range(files_number):
+def compare_lists(first_list: list[str], second_list: list[str]):
+    new_list = []
+    first_pointer = second_pointer = 0
+    while first_pointer < len(first_list) and second_pointer < len(second_list):
+        if is_first_word_better(first_list[first_pointer], second_list[second_pointer]):
+            new_list.append(first_list[first_pointer])
+            first_pointer += 1
+        else:
+            new_list.append(second_list[second_pointer])
+            second_pointer += 1
+    
+    if first_pointer >= len(first_list):
+        while second_pointer < len(second_list):
+            new_list.append(second_list[second_pointer])
+            second_pointer += 1
+    
+    if second_pointer >= len(second_list):
+        while first_pointer < len(first_list):
+            new_list.append(first_list[first_pointer])
+            first_pointer += 1
+    return new_list
+        
 
+def compare_files(files: list[str]):
+    midway = len(files) // 2
+    for i in range(midway):
+        with open(files[i], "r") as first_file, open(files[i+midway], "r") as second_file:
+            first_list = first_file.readlines()
+            second_list = second_file.readlines()
+            output_list = compare_lists(first_list, second_list)
+            file_name = create_file_name(i+1,)
+            save_sorted_values(file_name, output_list)
 
 def main():
     MAX_MEMORY = 10000
@@ -112,12 +142,13 @@ def main():
             word_list.append(line[:-1])
             if len(word_list) == MAX_MEMORY:
                 counter += 1
-                create_new_file(word_list, counter)
+                create_new_file(files_list, word_list, counter)
                 word_list.clear()
         if word_list:
             counter += 1
-            create_new_file(word_list, counter)
+            create_new_file(files_list, word_list, counter)
             word_list.clear()
+    compare_files(files_list)
 
 
 if __name__=="__main__":
