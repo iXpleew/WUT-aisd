@@ -83,16 +83,23 @@ def is_first_word_better(first_word: str, second_word: str) -> bool:
         return True
 
 
+def save_sorted_values(counter: int, sorted_list: list[str]):
+    with open(f"temp{counter}.txt", mode="w") as temp_file:
+        for line in sorted_list:
+            temp_file.write(f"{line}\n")
+
+
 def main():
-    counter = 0
-    MAX_MEMORY = 10
+    MAX_MEMORY = 10000
     word_list = []
+    counter = 0
     with open("input.txt", "r") as file:
         for line in file:
             word_list.append(line[:-1])
             if len(word_list) == MAX_MEMORY:
+                counter += 1
                 sorted_words = merge_sort(word_list)
-                print(sorted_words)
+                save_sorted_values(counter, sorted_words)
                 word_list.clear()
 
 
