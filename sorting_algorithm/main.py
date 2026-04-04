@@ -152,6 +152,15 @@ def compare_files(files: list[str]):
                     output_file.write(f"{second_line}\n")
                     second_line = second_file.readline()[:-1]
                     second_index += 1
+            
+            while first_index < first_file_lenght:
+                output_file.write(f"{first_line}\n")
+                first_line = first_file.readline()[:-1]
+                first_index += 1
+            while second_index < second_file_lenght:
+                output_file.write(f"{second_line}\n")
+                second_line = second_file.readline()[:-1]
+                second_index += 1               
         
             os.remove(create_file_name(i+1))
             os.remove(create_file_name(i+1+midway))
