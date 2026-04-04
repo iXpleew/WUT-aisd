@@ -106,34 +106,14 @@ def create_new_file(files_list: list[str], words_list: list[str], counter: int):
     save_sorted_values(file_name, sorted_words)
 
 
-def compare_lists(first_list: list[str], second_list: list[str]):
-    new_list = []
-    first_pointer = second_pointer = 0
-    while first_pointer < len(first_list) and second_pointer < len(second_list):
-        if is_first_word_better(first_list[first_pointer], second_list[second_pointer]):
-            new_list.append(first_list[first_pointer])
-            first_pointer += 1
-        else:
-            new_list.append(second_list[second_pointer])
-            second_pointer += 1
-    
-    if first_pointer >= len(first_list):
-        while second_pointer < len(second_list):
-            new_list.append(second_list[second_pointer])
-            second_pointer += 1
-    
-    if second_pointer >= len(second_list):
-        while first_pointer < len(first_list):
-            new_list.append(first_list[first_pointer])
-            first_pointer += 1
-    return new_list
-        
-
 def compare_files(files: list[str]):
     new_files = []
     midway = len(files) // 2
     for i in range(midway):
-        output_file_name = f"results/{len(files)}a{i}.txt"
+        if len(files) != 2:
+            output_file_name = f"results/{len(files)}a{i}.txt"
+        else:
+            output_file_name = f"output.txt"
         with open(files[i], "r") as first_file, open(files[i+midway], "r") as second_file, open(output_file_name, "w") as output_file:
             
             first_index = second_index = 0
@@ -162,8 +142,8 @@ def compare_files(files: list[str]):
                 second_line = second_file.readline()[:-1]
                 second_index += 1               
         
-            os.remove(first_file.name)
-            os.remove(second_file.name)
+        os.remove(first_file.name)
+        os.remove(second_file.name)
 
         new_files.append(output_file_name)
     if len(files) % 2 == 1:
