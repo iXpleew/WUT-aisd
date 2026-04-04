@@ -162,10 +162,13 @@ def compare_files(files: list[str]):
                 second_line = second_file.readline()[:-1]
                 second_index += 1               
         
-            os.remove(create_file_name(i+1))
-            os.remove(create_file_name(i+1+midway))
+            os.remove(first_file.name)
+            os.remove(second_file.name)
 
         new_files.append(output_file_name)
+    if len(files) % 2 == 1:
+        new_files.append(files[-1])
+    return new_files
 
 
 def main():
@@ -184,7 +187,8 @@ def main():
             counter += 1
             create_new_file(files_list, word_list, counter)
             word_list.clear()
-    compare_files(files_list)
+    while len(files_list) > 1:
+        files_list = compare_files(files_list)
 
 
 if __name__=="__main__":
