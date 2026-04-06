@@ -1,4 +1,5 @@
 import os
+import time
 
 letter_values = {
     'a': 1,
@@ -156,6 +157,8 @@ def main():
     files_list = []
     word_list = []
     counter = 0
+
+    start_time = time.perf_counter()
     with open("input.txt", "r") as file:
         for line in file:
             word_list.append(line[:-1])
@@ -169,7 +172,10 @@ def main():
             word_list.clear()
     while len(files_list) > 1:
         files_list = compare_files(files_list)
-
+    end_time = time.perf_counter()
+    
+    total_time = end_time - start_time
+    print(f"total time: {total_time:.2f}")
 
 if __name__=="__main__":
     main()
