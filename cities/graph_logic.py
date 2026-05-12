@@ -1,4 +1,5 @@
 from destination import Destination
+import numpy as np 
 
 
 def create_destiantion(path: dict, source: str, dest: str, distance: float, morning: int, noon: int, evening:int):
@@ -11,4 +12,5 @@ def create_destiantion(path: dict, source: str, dest: str, distance: float, morn
 
 
 def calculate_dijkstra_distance(map:dict, start_location: str, final_location: str):
-    pass
+    best_score = np.inf
+    total_distance = 0
