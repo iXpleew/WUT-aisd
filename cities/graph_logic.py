@@ -1,5 +1,6 @@
 from destination import Destination
 import numpy as np 
+import heapq
 
 
 def create_destiantion(path: dict, source: str, dest: str, distance: float, morning: int, noon: int, evening:int):
@@ -12,5 +13,13 @@ def create_destiantion(path: dict, source: str, dest: str, distance: float, morn
 
 
 def calculate_dijkstra_distance(map:dict, start_location: str, final_location: str):
-    best_score = np.inf
-    total_distance = 0
+    distances_from_start = {}
+    for key in map:
+        if key == start_location:
+            distances_from_start[key] = 0
+        else:
+            distances_from_start[key] = np.inf
+
+    queue = [(0, start_location)]
+    while queue:
+      
