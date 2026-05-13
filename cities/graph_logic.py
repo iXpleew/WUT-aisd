@@ -22,4 +22,14 @@ def calculate_dijkstra_distance(map:dict, start_location: str, final_location: s
 
     queue = [(0, start_location)]
     while queue:
+      current_distance, current_node = heapq.heappop(queue)
+      if current_distance > distances_from_start[current_node]:
+          continue
       
+      for neighbour in map[current_node]:
+        distance = current_distance + neighbour.length
+        if distance < distances_from_start[neighbour.destination]:
+            distances_from_start[neighbour.destination] = distance
+            heapq.heappush(queue, (distance, neighbour.destination))
+    
+    return distances_from_start[final_location]

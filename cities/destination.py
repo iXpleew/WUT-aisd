@@ -3,7 +3,7 @@ from dataclasses import dataclass
 @dataclass
 class Destination:
     destination: str
-    lenght: float
+    length: float
     morning_time: int
     noon_time: int
     evening_time: int
