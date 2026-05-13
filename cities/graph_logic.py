@@ -13,19 +13,19 @@ def create_destiantion(path: dict, source: str, dest: str, distance: float, morn
         path[source] = new_paths_list
 
 
-def define_dijkstra_type(category: str) -> int:
-    match str:
+def define_dijkstra_type(category: str, city: Destination) -> float:
+    match category:
         case "distance":
-            return 1
+            return city.length
         case "morning":
-            return 2
+            return city.morning_time
         case "noon":
-            return 3
+            return city.noon_time
         case "evening":
-            return 4
+            return city.evening_time
         case "night":
-            return 5
-    return 0
+            return city.night_time()
+    return 0.
 
 
 def calculate_dijkstra_distance(map:dict, start_location: str, final_location: str, by_what: str):
@@ -36,14 +36,14 @@ def calculate_dijkstra_distance(map:dict, start_location: str, final_location: s
         else:
             distances_from_start[key] = np.inf
 
-    queue = [(0, start_location)]
+    queue = [(0.0, start_location)]
     while queue:
       current_distance, current_node = heapq.heappop(queue)
       if current_distance > distances_from_start[current_node]:
           continue
       
       for neighbour in map[current_node]:
-        distance = current_distance + neighbour.length
+        distance = current_distance + define_dijkstra_type(by_what, neighbour)
         if distance < distances_from_start[neighbour.destination]:
             distances_from_start[neighbour.destination] = distance
             heapq.heappush(queue, (distance, neighbour.destination))
