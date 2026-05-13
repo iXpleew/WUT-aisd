@@ -13,7 +13,19 @@ def create_destiantion(path: dict, source: str, dest: str, distance: float, morn
         path[source] = new_paths_list
 
 
-def define_dijkstra_type(category: str, city: Destination) -> float:
+def define_dijkstra_type(category: int, city: Destination) -> float:
+    if category < 0:
+        return city.length
+    elif 7 <= category < 10:
+        return city.morning_time
+    elif 10 <= category < 16:
+        return city.noon_time
+    elif 16 <= category <= 20:
+        return city.evening_time
+    else:
+        return city.night_time()
+    
+    
     match category:
         case "distance":
             return city.length
