@@ -13,7 +13,22 @@ def create_destiantion(path: dict, source: str, dest: str, distance: float, morn
         path[source] = new_paths_list
 
 
-def calculate_dijkstra_distance(map:dict, start_location: str, final_location: str):
+def define_dijkstra_type(category: str) -> int:
+    match str:
+        case "distance":
+            return 1
+        case "morning":
+            return 2
+        case "noon":
+            return 3
+        case "evening":
+            return 4
+        case "night":
+            return 5
+    return 0
+
+
+def calculate_dijkstra_distance(map:dict, start_location: str, final_location: str, by_what: str):
     distances_from_start = {}
     for key in map:
         if key == start_location:
@@ -36,12 +51,12 @@ def calculate_dijkstra_distance(map:dict, start_location: str, final_location: s
     return distances_from_start[final_location]
 
 
-def get_dijsktra_info(city_number: int, map: dict) -> list[tuple]:
+def get_dijsktra_info(city_number: int, map: dict, by_what: str) -> list[tuple]:
     list_of_info = []
     for i in range(10):
         start_city = str(random.randint(0, city_number))
         end_city = str(random.randint(0, city_number))
-        distance = calculate_dijkstra_distance(map, start_city, end_city)
+        distance = calculate_dijkstra_distance(map, start_city, end_city, by_what)
         list_of_info.append((start_city, end_city, distance))
     return list_of_info
 
