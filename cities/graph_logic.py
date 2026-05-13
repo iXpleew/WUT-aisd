@@ -48,6 +48,6 @@ def get_dijsktra_info(city_number: int, map: dict) -> list[tuple]:
 
 def print_dijkstra_info(cities_info: list[tuple]):
     for start_city, end_city, distance in cities_info:
-        print(f"Distance from {start_city} to {end_city} is {distance}")
+        print(f"Distance from {start_city} to {end_city} is {distance:.2f}")
         
 
