@@ -73,14 +73,18 @@ def calculate_dijkstra_time(map:dict, start: str, final: str, current_time: str)
     pass
 
 
-def get_dijsktra_info(city_number: int, map: dict, curr_time: int) -> list[tuple]:
+def get_dijsktra_info_distance(city_number: int, map: dict, curr_time: int) -> list[tuple]:
     list_of_info = []
     for i in range(10):
         start_city = str(random.randint(0, city_number))
         end_city = str(random.randint(0, city_number))
-        distance = calculate_dijkstra_distance(map, start_city, end_city, curr_time)
+        distance = calculate_dijkstra_distance(map, start_city, end_city)
         list_of_info.append((start_city, end_city, distance))
     return list_of_info
+
+
+def get_dijsktra_info_time(start_city: int, end_city: int, map: dict, curr_time: str) -> str:
+    return ""
 
 
 def print_dijkstra_info(cities_info: list[tuple]):
