@@ -17,11 +17,11 @@ def create_destiantion(path: dict, source: str, dest: str, distance: float, morn
 def define_dijkstra_type(category: int, city: Destination) -> float:
     if category < 0:
         return city.length
-    elif 7 <= category < 10:
+    elif 700 <= category < 1000:
         return city.morning_time
-    elif 10 <= category < 16:
+    elif 1000 <= category < 1600:
         return city.noon_time
-    elif 16 <= category <= 20:
+    elif 1600 <= category <= 2000:
         return city.evening_time
     else:
         return city.night_time()
@@ -47,7 +47,7 @@ def calculate_proper_time(current_time: str, add_time: float):
 def return_int_hour_value(time: str) -> int:
     hour = int(time[:2])
     minutes = int(time[3:])
-    hour *= 1000
+    hour *= 100
     return hour+minutes
     
 
@@ -86,10 +86,18 @@ def calculate_dijkstra_time(map:dict, start: str, final: str, current_time: str)
     queue = [(current_time, start)]
     while queue:
         current_time, current_node = heapq.heappop(queue)
-
+        
         if return_int_hour_value(current_time) > hours_from_start[current_node]:
-            pass
-    pass
+            continue
+        
+        for neighbour in map[current_node]:
+            part_of_day = define_dijkstra_type(return_int_hour_value(current_time), neighbour)
+            spent_time = calculate_proper_time(current_time, part_of_day)
+            if spent_time < hours_from_start[neighbour.destination]:
+                hours_from_start[neighbour.destination] = spent_time
+                heapq.heappush(queue, (spent_time, neighbour.destination))
+    
+    return hours_from_start[final]
 
 
 def get_dijsktra_info_distance(city_number: int, map: dict, curr_time: int) -> list[tuple]:
