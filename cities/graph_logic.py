@@ -93,7 +93,7 @@ def calculate_dijkstra_time(map:dict, start: str, final: str, current_time: str)
         for neighbour in map[current_node]:
             part_of_day = define_dijkstra_type(return_int_hour_value(current_time), neighbour)
             spent_time = calculate_proper_time(current_time, part_of_day)
-            if spent_time < hours_from_start[neighbour.destination]:
+            if return_int_hour_value(spent_time) < hours_from_start[neighbour.destination]:
                 hours_from_start[neighbour.destination] = spent_time
                 heapq.heappush(queue, (spent_time, neighbour.destination))
     
