@@ -96,7 +96,16 @@ def calculate_dijkstra_time(map: dict, start: str, final: str, current_time: str
 
 
 def distanceof_travelling_salesmen(map:dict, starting_city: str):
-    pass
+    list_of_visited_cities = [starting_city]
+    neighbours = [x for x in map[starting_city] if x not in list_of_visited_cities]
+
+    next_city = min(neighbours, key=lambda x: x.lenght)
+    total_distance = next_city.lenght
+
+    while starting_city != next_city:
+        Try: 
+            next_city = min(x1.lenght for x1 in [x for x in map[starting_city] if x not in  list_of_visited_cities])
+        catch ValueError
 
 
 def get_dijkstra_info_distance(city_number: int, map: dict) -> list[tuple]:
