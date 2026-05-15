@@ -95,17 +95,39 @@ def calculate_dijkstra_time(map: dict, start: str, final: str, current_time: str
     return format_minutes_to_time(final_time_of_day)
 
 
-def distanceof_travelling_salesmen(map:dict, starting_city: str):
-    list_of_visited_cities = [starting_city]
-    neighbours = [x for x in map[starting_city] if x not in list_of_visited_cities]
+def distance_of_travelling_salesman(map: dict, starting_city: str) -> tuple[list[str], float]:
+    visited_cities = {starting_city}
+    all_cities = set(map.keys())
+    
+    current_city = starting_city
+    total_distance = 0.0
+    
+    route = [starting_city]
 
-    next_city = min(neighbours, key=lambda x: x.lenght)
-    total_distance = next_city.lenght
+    while len(visited_cities) < len(all_cities):
+        shortest_path = float('inf')
+        nearest_city = None
 
-    while starting_city != next_city:
-        Try: 
-            next_city = min(x1.lenght for x1 in [x for x in map[starting_city] if x not in  list_of_visited_cities])
-        catch ValueError
+        for target_city in all_cities - visited_cities:
+            distance = calculate_dijkstra_distance(map, current_city, target_city)
+            if distance < shortest_path:
+                shortest_path = distance
+                nearest_city = target_city
+
+        if nearest_city is None or shortest_path == float('inf'):
+            break
+
+        total_distance += shortest_path
+        current_city = nearest_city
+        visited_cities.add(current_city)
+        route.append(current_city) 
+
+    return_distance = calculate_dijkstra_distance(map, current_city, starting_city)
+    if return_distance != float('inf'):
+        total_distance += return_distance
+        route.append(starting_city)
+
+    return route, total_distance     
 
 
 def get_dijkstra_info_distance(city_number: int, map: dict) -> list[tuple]:
