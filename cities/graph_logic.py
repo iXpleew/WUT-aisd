@@ -44,6 +44,12 @@ def calculate_proper_time(current_time: str, add_time: float):
     return f"{hour_time:02d}:{minutes_time:02d}"
 
 
+def return_int_hour_value(time: str) -> int:
+    hour = int(time[:2])
+    minutes = int(time[3:])
+    hour *= 1000
+    return hour+minutes
+    
 
 def calculate_dijkstra_distance(map: dict, start_location: str, final_location: str):
     distances_from_start = {}
@@ -70,6 +76,19 @@ def calculate_dijkstra_distance(map: dict, start_location: str, final_location: 
 
 
 def calculate_dijkstra_time(map:dict, start: str, final: str, current_time: str):
+    hours_from_start = {}
+    for key in map:
+        if key == start:
+            hours_from_start[key] = 0.0
+        else:
+            hours_from_start[key] = float("inf")
+    
+    queue = [(current_time, start)]
+    while queue:
+        current_time, current_node = heapq.heappop(queue)
+
+        if return_int_hour_value(current_time) > hours_from_start[current_node]:
+            pass
     pass
 
 
