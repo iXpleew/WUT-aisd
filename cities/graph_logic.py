@@ -95,6 +95,10 @@ def calculate_dijkstra_time(map: dict, start: str, final: str, current_time: str
     return format_minutes_to_time(final_time_of_day)
 
 
+def distanceof_travelling_salesmen(map:dict, starting_city: str):
+    pass
+
+
 def get_dijkstra_info_distance(city_number: int, map: dict) -> list[tuple]:
     list_of_info = []
     for _ in range(10):
