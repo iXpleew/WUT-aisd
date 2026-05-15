@@ -2,6 +2,7 @@ import heapq
 import random
 from destination import Destination
 
+
 def create_destination(path: dict, source: str, dest: str, distance: float, morning: int, noon: int, evening: int):
     new_destination = Destination(dest, distance, morning, noon, evening)
     if source in path:
@@ -9,7 +10,8 @@ def create_destination(path: dict, source: str, dest: str, distance: float, morn
     else:
         path[source] = [new_destination]
 
-def define_dijkstra_type(current_minute_of_day: int, city: Destination) -> float:
+
+def define_dijkstra_type(current_minute_of_day: float, city: Destination) -> float:
     if current_minute_of_day < 0:
         return city.length
     elif 420 <= current_minute_of_day < 600:
@@ -21,15 +23,18 @@ def define_dijkstra_type(current_minute_of_day: int, city: Destination) -> float
     else:
         return city.night_time()
 
+
 def return_minutes_from_midnight(time_str: str) -> int:
     hour = int(time_str[:2])
     minutes = int(time_str[3:])
     return (hour * 60) + minutes
 
+
 def format_minutes_to_time(total_minutes: float) -> str:
     hour = (int(total_minutes) // 60) % 24
     minutes = int(total_minutes) % 60
     return f"{hour:02d}:{minutes:02d}"
+
 
 def calculate_dijkstra_distance(map: dict, start_location: str, final_location: str):
     distances_from_start = {}
@@ -53,6 +58,7 @@ def calculate_dijkstra_distance(map: dict, start_location: str, final_location: 
                 heapq.heappush(queue, (distance, neighbour.destination))
     
     return distances_from_start[final_location]
+
 
 def calculate_dijkstra_time(map: dict, start: str, final: str, current_time: str):
     start_time_minutes = return_minutes_from_midnight(current_time)
@@ -88,6 +94,7 @@ def calculate_dijkstra_time(map: dict, start: str, final: str, current_time: str
     final_time_of_day = (start_time_minutes + final_elapsed) % 1440
     return format_minutes_to_time(final_time_of_day)
 
+
 def get_dijkstra_info_distance(city_number: int, map: dict) -> list[tuple]:
     list_of_info = []
     for _ in range(10):
@@ -97,6 +104,7 @@ def get_dijkstra_info_distance(city_number: int, map: dict) -> list[tuple]:
         list_of_info.append((start_city, end_city, distance))
     return list_of_info
 
+
 def get_dijkstra_info_time(city_number: int, map: dict, curr_time: str) -> list[tuple]:
     list_of_info = []
     for _ in range(10):
@@ -105,6 +113,7 @@ def get_dijkstra_info_time(city_number: int, map: dict, curr_time: str) -> list[
         final_time = calculate_dijkstra_time(map, start_city, end_city, curr_time)
         list_of_info.append((start_city, end_city, final_time))
     return list_of_info
+
 
 def print_dijkstra_info(cities_info: list[tuple]):
     for start_city, end_city, result in cities_info:
