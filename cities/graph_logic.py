@@ -6,7 +6,7 @@ import csv
 
 def import_city(file_name: str) -> dict:
     pathways = {}
-    with open("data/city_small.csv", newline="") as csv_file:
+    with open(file_name, newline="") as csv_file:
         small_cities = csv.reader(csv_file)
         header = next(small_cities)
         
