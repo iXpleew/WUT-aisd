@@ -1,6 +1,19 @@
 import heapq
 import random
 from destination import Destination
+import csv
+
+
+def import_city(file_name: str) -> dict:
+    pathways = {}
+    with open("data/city_small.csv", newline="") as csv_file:
+        small_cities = csv.reader(csv_file)
+        header = next(small_cities)
+        
+        for index, path in enumerate(small_cities):
+            create_destination(pathways, path[0], path[1], float(path[2]), int(path[3]), int(path[4]), int(path[5]))
+            create_destination(pathways, path[1], path[0], float(path[2]), int(path[3]), int(path[4]), int(path[5]))
+    return pathways
 
 
 def create_destination(path: dict, source: str, dest: str, distance: float, morning: int, noon: int, evening: int):
